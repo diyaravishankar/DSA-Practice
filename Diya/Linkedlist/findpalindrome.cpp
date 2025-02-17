@@ -25,9 +25,6 @@ class Solution {
                 st.pop();
                 temp=temp->next;
             }
-            if(st.empty()){
-                return true;
-            }
             return false;
         }
     };
