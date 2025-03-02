@@ -6,4 +6,4 @@ class Solution:
     length=1
     while num+length in numSet:length+=1
     setMax=max(setMax,length)
-  return setMax
+  return setMax00
