@@ -1,7 +1,7 @@
 class Solution {
     public:
      int minZeroArray(vector<int>& nums, vector<vector<int>>& queries) {
-      int n = nums.size(), left = 0, right = queries.size()
+      int n = nums.size(), left = 0, right = queries.size();
       if (!canFormZeroArray(nums, queries, right)) return -1;
       while (left <= right) {
        int mid = left + (right - left) / 2;
