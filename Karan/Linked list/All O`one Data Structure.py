@@ -10,7 +10,7 @@ class AllOne:
   self.key_count[key]=count+1
   if count in self.count_keys and key in self.count_keys[count]:
    del self.count_keys[count][key]
-   if not self.count_keys[count]:
+   if not self.count_keys[count]: 
     del self.count_keys[count]
   self.count_keys[count+1][key]=None
   self.max_count=max(self.max_count,count+1)
