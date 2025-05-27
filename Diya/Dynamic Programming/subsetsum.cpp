@@ -6,10 +6,7 @@ bool subsetSumToK(int n, int k, vector<int> &arr) {
     }
 
     for (int ind = 1; ind < n; ind++) {
-        // Initialize a new row 'cur' to store the current state of the DP table
         vector<bool> cur(k + 1, false);
-
-        // Base case: If the target sum is 0, we can achieve it by taking no elements
         cur[0] = true;
 
         for (int target = 1; target <= k; target++) {
