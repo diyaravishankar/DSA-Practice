@@ -1,4 +1,3 @@
-
 class Solution {
     int countPartitions(int[] arr, int d) {
         int totalsum=Arrays.stream(arr).sum();
