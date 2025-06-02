@@ -5,7 +5,6 @@ class Solution {
         var oddCount = 0
         var prefixSum = 0
         var result = 0
-
         for (num in arr) {
             prefixSum += num
             if (prefixSum % 2 == 0) {
