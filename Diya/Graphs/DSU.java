@@ -46,3 +46,28 @@ public class DSU {
         return find(x) == find(y);
     }
 }
+
+
+class GfG {
+
+    int find(int parent[], int i) {
+        if (parent[i] == i) {
+            return i;
+        }
+      
+        // Else recursively find the representative
+        // of the parent 
+        return find(parent,parent[i]);
+    }
+
+    void unionSet(int parent[], int i, int j) {
+        int irep = find(parent,i);
+
+        // Representative of set containing j
+        int jrep = find(parent,j);
+
+        // Make the representative of i's set be 
+        // the representative of j's set
+        parent[irep] = jrep;
+    }
+}
