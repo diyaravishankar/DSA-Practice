@@ -4,4 +4,5 @@ class Solution:
   result = set()
   for idx in key_indices:
    for i in range(max(0, idx - k), min(len(nums), idx + k + 1)):
-    
+    result.add(i)
+  return sorted(result)
