@@ -1,48 +1,78 @@
 // User function Template for Java
-import java.util.HashMap;
-
 class Solution {
-    static HashMap<String, Integer> memo;
-
-    static int countWays(String s) {
-        memo = new HashMap<>();
-        return countWaysUtil(s, 0, s.length() - 1, true);
+    static boolean evaluate(int b1, int b2, char op)
+    {
+        if (op == '&') {
+            return (b1 & b2) == 1;
+        }
+        else if (op == '|') {
+            return (b1 | b2) == 1;
+        }
+        return (b1 ^ b2) == 1;
     }
 
-    static int countWaysUtil(String s, int i, int j, boolean isTrue) {
-        if (i > j) return 0;
+    // Function which returns the number of ways
+    // s[i:j] evaluates to req.
+    static int countRecur(int i, int j, int req, String s,
+                          int[][][] memo)
+    {
 
+        // Base case:
         if (i == j) {
-            if (isTrue) return s.charAt(i) == 'T' ? 1 : 0;
-            else return s.charAt(i) == 'F' ? 1 : 0;
+            return (req == (s.charAt(i) == 'T' ? 1 : 0))
+                ? 1
+                : 0;
         }
 
-        String key = i + "_" + j + "_" + isTrue;
-        if (memo.containsKey(key)) return memo.get(key);
+        // If value is memoized
+        if (memo[i][j][req] != -1) {
+            return memo[i][j][req];
+        }
 
         int ans = 0;
+        for (int k = i + 1; k < j; k += 1) {
 
-        for (int k = i + 1; k <= j - 1; k += 2) {
-            char operator = s.charAt(k);
+            // Count Ways in which left substring
+            // evaluates to true and false.
+            int leftTrue = countRecur(i, k - 1, 1, s, memo);
+            int leftFalse
+                = countRecur(i, k - 1, 0, s, memo);
 
-            int lt = countWaysUtil(s, i, k - 1, true);
-            int lf = countWaysUtil(s, i, k - 1, false);
-            int rt = countWaysUtil(s, k + 1, j, true);
-            int rf = countWaysUtil(s, k + 1, j, false);
+            // Count Ways in which right substring
+            // evaluates to true and false.
+            int rightTrue
+                = countRecur(k + 1, j, 1, s, memo);
+            int rightFalse
+                = countRecur(k + 1, j, 0, s, memo);
 
-            if (operator == '&') {
-                if (isTrue) ans += lt * rt;
-                else ans += lt * rf + lf * rt + lf * rf;
-            } else if (operator == '|') {
-                if (isTrue) ans += lt * rt + lt * rf + lf * rt;
-                else ans += lf * rf;
-            } else if (operator == '^') {
-                if (isTrue) ans += lt * rf + lf * rt;
-                else ans += lt * rt + lf * rf;
+            // Check if the combinations result
+            // to req.
+            if (evaluate(1, 1, s.charAt(k)) == (req == 1)) {
+                ans += leftTrue * rightTrue;
+            }
+            if (evaluate(1, 0, s.charAt(k)) == (req == 1)) {
+                ans += leftTrue * rightFalse;
+            }
+            if (evaluate(0, 1, s.charAt(k)) == (req == 1)) {
+                ans += leftFalse * rightTrue;
+            }
+            if (evaluate(0, 0, s.charAt(k)) == (req == 1)) {
+                ans += leftFalse * rightFalse;
             }
         }
 
-        memo.put(key, ans);
-        return ans;
+        return memo[i][j][req] = ans;
+    }
+    static int countWays(String s) {
+        // code here
+        int n = s.length();
+        int[][][] memo = new int[n][n][2];
+        for (int[][] mat : memo) {
+            for (int[] row : mat) {
+                Arrays.fill(row, -1);
+            }
+        }
+        return countRecur(0, n - 1, 1, s, memo);
+        
     }
 }
