@@ -1,23 +1,27 @@
 class Solution {
     public int matchPlayersAndTrainers(int[] players, int[] trainers) {
-        Arrays.sort(players);
-        Arrays.sort(trainers);
-        
-        int count = 0;
-        int i = 0; // pointer for players
-        int j = 0; // pointer for trainers
-        
-        while (i < players.length && j < trainers.length) {
-            if (players[i] <= trainers[j]) {
-                // Match found, move both pointers
-                count++;
-                i++;
-                j++;
-            } else {
-                // Current trainer can't train this player, try next trainer
-                j++;
+
+        Thread t1 = new Thread(()->Arrays.sort(players));
+        Thread t2 = new Thread(()->Arrays.sort(trainers));
+        t1.start();
+        t2.start();
+        try{
+            t1.join();
+            t2.join();
+        }catch(Exception e){}
+
+        //Arrays.sort(players);
+        //Arrays.sort(trainers);
+
+        int matches = 0;
+        int playPtr = 0, trainPtr = 0;
+        while(trainPtr < trainers.length && playPtr < players.length) {
+            if ( players[playPtr] <= trainers[trainPtr]) {
+                playPtr++; trainPtr++; matches++;
             }
+            else trainPtr++;   
         }
-        return count;
+
+        return matches;
     }
 }
