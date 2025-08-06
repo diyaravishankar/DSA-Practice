@@ -19,7 +19,7 @@ class Solution
             // Step 4: Find last event that ends before this one starts
             int prev = binarySearch(events, i - 1, start);
 
-            for (int j = 1; j <= k; j++) 
+            for (int j = 1; j <= k; j++)
             {
                 // Option 1: Skip current event
                 // Option 2: Take current event + best value from prev non-overlapping event

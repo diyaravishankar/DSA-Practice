@@ -16,7 +16,6 @@ class Solution {
     static int countRecur(int i, int j, int req, String s,
                           int[][][] memo)
     {
-
         // Base case:
         if (i == j) {
             return (req == (s.charAt(i) == 'T' ? 1 : 0))

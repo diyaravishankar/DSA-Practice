@@ -2,8 +2,6 @@ class Solution {
     static int lis(int arr[]) {
         int n = arr.length;
         int[] dp = new int[n];
-        
-        // Each element is at least part of a subsequence of length 1
         for (int i = 0; i < n; i++) {
             dp[i] = 1;
         }
