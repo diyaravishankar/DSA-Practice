@@ -4,7 +4,7 @@ class Solution:
     @lru_cache(None)
     def compute(expr):
       res = []
-      for i, ch in enumerate(expr)
+      for i, ch in enumerate(expr):
         if ch in '+-*':
           left = compute(expr[:i])
           right = compute(expr[i+1:])
